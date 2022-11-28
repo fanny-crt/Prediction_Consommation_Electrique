@@ -14,4 +14,4 @@ On a une très grande quantité de données avec un taux d'échantillonnage par 
 
 - Stationnarité : tests ADF et KPSS 
 
-![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/test_ADF_KPSS.PNG)s)
+![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/test_ADF_KPSS.PNG)
