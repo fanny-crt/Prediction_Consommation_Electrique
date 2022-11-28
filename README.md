@@ -37,3 +37,9 @@ Nous avons des corrélations au décalage 1 et 24. Le décalage en 1 semble "év
 ![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/increments_locaux_saisonniers.PNG)
 ![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/increments_locaux_saisonniers2.PNG)
 
+# Model Building
+
+L’étude des différenciations nous amène à explorer les modèles de type SARIMA(p,d,q)x(P,D,Q)_{24} où (d,D)=(0,1) et (d,D)=(1,1).
+Nous nous sommes principalement appuyées sur la commande auto.arima afin de déterminer les ordres p, q, P et Q et sur les résultats de l'ACF et la PACF. Nous avons choisi le modèle qui minimise le critère BIC (Bayesian Information Criterion). 
+
+# Model performance
