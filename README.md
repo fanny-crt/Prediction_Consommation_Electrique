@@ -45,4 +45,13 @@ Nous nous sommes principalement appuyées sur la commande auto.arima afin de dé
 - Modèle 1 : SARIMA(1,0,0)x(1,1,0)_{24}
 
 ![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/modele_1_SARIMA.PNG)
+
+![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/coef_modele_1_SARIMA.PNG)
+
+- Modèle 2 : SARIMA(0,1,1)x(0,1,1)_{24}
+
+- Modèle 3
+
 # Model performance
+
+![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/model_performance.PNG)
