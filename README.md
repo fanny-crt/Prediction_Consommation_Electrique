@@ -15,3 +15,13 @@ On a une très grande quantité de données avec un taux d'échantillonnage par 
 - Stationnarité : tests ADF et KPSS 
 
 ![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/test_ADF_KPSS.PNG)
+
+Les tests se contredisent.
+
+- Les autocorrélations empiriques
+
+![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/lagplot_multi.png)
+
+![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/ACF.JPG)
+
+![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/PACF.JPG)
