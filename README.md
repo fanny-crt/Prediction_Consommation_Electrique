@@ -50,8 +50,13 @@ Nous nous sommes principalement appuyées sur la commande auto.arima afin de dé
 
 - Modèle 2 : SARIMA(0,1,1)x(0,1,1)_{24}
 
-- Modèle 3
+![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/modele_2.PNG)
+
+- Modèle 3 : SARIMA(3,1,1)x(1,1,1)_{24}
+
+![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/modele_3.PNG)
 
 # Model performance
 
 ![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/model_performance.PNG)
+
