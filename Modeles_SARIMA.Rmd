@@ -1,0 +1,268 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# 1) data, fonction `checkupRes` et library : 
+
+```{r}
+library(forecast)
+library(tseries)
+library(ggplot2)
+
+
+checkupRes = function(Res){
+  
+  # Partitionnement de la fenetre graphique 
+  layout(matrix(c(1,1,1,2:7), nrow=3, ncol=3, byrow=TRUE))
+  
+  # Serie des residus
+  plot(Res, type="l", col="black", main="Évolution de la série", xlab="t", ylab=expression(epsilon[t]))
+  
+  # ACF/PACF
+  acf(as.numeric(Res), lag.max=40, main="ACF", ylab="ACF", ylim=c(-0.1,0.1))
+  pacf(as.numeric(Res), lag.max=40, main="PACF", ylab="PACF",ylim=c(-0.1,0.1))
+  
+  # Nuage de points avec dÃ©calage de 1 dans le temps
+  n = length(Res)
+  plot(Res[1:(n-1)], Res[2:n],main="Res[i] en fonction de Res[i-1]", type="p", col="black", xlab=expression(epsilon[t-1]), ylab=expression(epsilon[t]))
+  
+  # Histogramme
+  hist(Res, breaks=sqrt(n), freq=FALSE, col="black", main="Histogramme", ylab="Dens")
+  curve(dnorm(x, m=mean(Res), sd=sd(Res)), col="orange", lty=2, add=TRUE)
+  
+  # QQ plots
+  qqnorm(Res, xlab="N(0,1)", ylab="Quant Emp", main="QQplot",col="black")
+  qqline(Res, distribution=qnorm, lty=2,col="orange")
+  
+  # Nuage de points standardisÃ©
+  plot((Res-mean(Res))/sd(Res), type="p",col="black", main="Série centrée/réduite", xlab="t", ylab=expression(paste("std ", epsilon[t])))
+  abline(h=c(-1.96, 1.96), lty=2, col="orange")
+}
+```
+
+
+```{r}
+data <- read.csv(file = "donnees_nettoyees3.csv", header = TRUE, sep = ",")
+data$Voltage <- as.numeric(data$Voltage)
+data$date_heure <- as.POSIXct(data$date_heure, format="%Y-%m-%d %H:%M:%S")
+```
+
+
+# 2) Les modeles : 
+
+```{r}
+X = data$Voltage
+
+Mod1 <- Arima(X,order=c(1,0,0), seasonal=list(order=c(1,1,0),period=24)) # Mod 2
+Mod2 <- Arima(X, order=c(0,1,1), seasonal=list(order=c(0,1,1),period=24)) # Mod 7
+Mod3 <- Arima(X, order=c(3,1,1), seasonal=list(order=c(1,1,1),period=24)) # Mod 13
+```
+
+
+```{r}
+Mod1
+Mod2
+Mod3
+```
+
+
+## MOD1 : 
+
+```{r}
+checkupRes(Mod1$residuals) # graphiquement ok
+shapiro.test(Mod1$residuals[0:5000]) # rejet normalite
+Box.test(Mod1$residuals, lag =24, type = "Ljung-Box") # rejet bruit blanc
+```
+
+```{r}
+n=length(X)
+XT = X[1:(n-24*2)] # prédiction sur une semaine
+
+Mod1T <- Arima(XT, order=c(1,0,0), seasonal=list(order=c(1,1,0),period=24))
+Pred1T = forecast(Mod1T, h=24*2)
+
+Ntps = (n-24*2+1):n
+
+plot(Ntps, X[Ntps], type='l',lwd=2,main="Prédiction du modèle 1 sur les 2 dernières périodes",xlab="mois",ylab="tension")
+
+lines(Ntps, Pred1T$mean, type="l", col="purple")
+legend(x = "bottomright",          # Position
+       inset = 0.05,
+       legend = "Pred1T",  # Legend texts
+       lty = 1,           # Line types
+       col = "purple",           # Line colors
+       lwd = 1)                 # Line width
+```
+
+
+```{r}
+Ntps=(n-24*2+1):n
+MSE1 = sum ((X[Ntps] - Pred1T$mean)**2)/(24*2)
+MSE1
+```
+
+
+## MOD2 : 
+
+```{r}
+checkupRes(Mod2$residuals) # graphiquement moyen pour bruit blanc mais ok pour normalite
+shapiro.test(Mod2$residuals[0:5000]) # rejet normalite
+Box.test(Mod2$residuals, lag =24, type = "Ljung-Box") # rejet bruit blanc
+```
+
+```{r}
+n=length(X)
+XT = X[1:(n-24*2)] # prédiction sur une semaine
+
+Mod2T <- Arima(XT, order=c(0,1,1), seasonal=list(order=c(0,1,1),period=24))
+Pred2T = forecast(Mod2T, h=24*2)
+
+Ntps = (n-24*2+1):n
+
+plot(Ntps, X[Ntps], type='l',lwd=2,main="Prédiction du modèle 2 sur les 2 dernières périodes",xlab="mois",ylab="tension")
+
+lines(Ntps, Pred2T$mean, type="l", col="red")
+legend(x = "bottomright",          # Position
+       inset = 0.05,
+       legend = "Pred2T",  # Legend texts
+       lty = 1,           # Line types
+       col = "red",           # Line colors
+       lwd = 1)                 # Line width
+```
+
+
+```{r}
+Ntps=(n-24*2+1):n
+MSE2 = sum ((X[Ntps] - Pred2T$mean)**2)/(24*2)
+MSE2
+```
+
+
+## MOD3 : 
+
+```{r}
+checkupRes(Mod3$residuals) # graphiquement OK pour les 2 
+shapiro.test(Mod3$residuals[0:5000]) # rejet normalite
+Box.test(Mod3$residuals, lag =24, type = "Ljung-Box") # rejet bruit blanc (mais mieux que mod7)
+```
+
+
+```{r}
+n=length(X)
+XT = X[1:(n-24*2)] # prédiction sur une semaine
+
+Mod3T <- Arima(XT, order=c(3,1,1), seasonal=list(order=c(1,1,1),period=24))
+Pred3T = forecast(Mod3T, h=24*2)
+
+Ntps = (n-24*2+1):n
+
+plot(Ntps, X[Ntps], type='l',lwd=2,main="Prédiction du modèle 3 sur les 2 dernières périodes",xlab="mois",ylab="tension")
+
+lines(Ntps, Pred3T$mean, type="l", col="blue")
+legend(x = "bottomright",          # Position
+       inset = 0.05,
+       legend = "Pred13T",  # Legend texts
+       lty = 1,           # Line types
+       col = "blue",           # Line colors
+       lwd = 1)                 # Line width
+```
+
+
+```{r}
+Ntps=(n-24*2+1):n
+MSE3 = sum ((X[Ntps] - Pred3T$mean)**2)/(24*2)
+MSE3
+```
+
+
+
+
+
+# RECAP : 
+
+```{r}
+BIC = data.frame(Mod1$bic,Mod2$bic,Mod3$bic)
+BIC
+```
+
+```{r}
+MSE = data.frame(MSE1,MSE2,MSE3)
+MSE
+```
+
+```{r}
+n=length(data$Voltage)
+XT = data$Voltage[1:(n-24*2)] # prédiction sur une semaine
+Ntps = (n-24*2+1):n
+
+plot(Ntps, X[Ntps], type='l',lwd=2,main="Prédiction des modèles sur les 2 dernières périodes",xlab="mois",ylab="tension")
+lines(Ntps, Pred1T$mean, type="l", col="purple")
+lines(Ntps, Pred2T$mean, type="l", col="red")
+lines(Ntps, Pred3T$mean, type="l", col="blue")
+legend(x = "bottomright",          # Position
+       inset = 0.05,
+       legend = c("Pred1T","Pred2T","Pred3T"),  # Legend texts
+       lty = 1,           # Line types
+       col = c("purple","blue","red"),           # Line colors
+       lwd = 1)                 # Line width
+```
+
+
+Les modeles 7 et 13 predisent plus ou moins la meme chose. MSE7 < MSE13 et BIC 13 < BIC 7, mais les bruits blanc sont mieux dans le modele 13 que dans le modele 7. Pas tres interressant. Le modele 2 a une MSE moins bonne que 7 et 13 mais c'est pas tres loin. 
+
+Le choix serait donc entre le modele 7 et le 13, et c'est le 7 qui semble le mieux par rapport a MSE.
+
+
+Prédiction de la tension électrique de la prochaine semaine
+
+```{r}
+X = data$Voltage
+Mod = Arima(X, order=c(0,1,1), seasonal=list(order=c(0,1,1),period=24)) 
+Pred = forecast(Mod, h=24*2)
+```
+
+
+
+```{r}
+X = data$Voltage
+Tps=8500:8762
+n=length(Tps)
+NTps=(n+1):(n+24*2)
+plot(X[Tps], type="l", lwd=2,xlim=c(0, 300),ylim=c(225,255), xlab="Mois",ylab="Tension",main="Prédiction sur 2 périodes")
+polygon(c(NTps, rev(NTps)), c(Pred$upper[,1], rev(Pred$lower[,1])), col="grey", border=FALSE)
+lines(NTps, Pred$mean, type="l", lwd=2, col="blue")
+lines(NTps, Pred$lower[,1], type="l", lty=2, col="blue")
+lines(NTps, Pred$upper[,1], type="l", lty=2, col="blue")
+legend("bottomleft", legend=c("Pred", "IP 80%"), col="blue", lty=1:2, lwd=c(2,1))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
