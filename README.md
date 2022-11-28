@@ -25,3 +25,7 @@ Les tests se contredisent.
 ![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/ACF.JPG)
 
 ![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/PACF.JPG)
+
+Nous avons des corrélations au décalage 1 et 24. Le décalage en 1 semble "évident", la tension mesurée au temps t est naturellement proche de la tension mesurée 1 heure plus tôt. De plus, la série temporelle est périodique et non stationnaire, car nous observons un motif de période 24 (périodicité journalière). 
+
+- Analyse des incréments saisonniers
