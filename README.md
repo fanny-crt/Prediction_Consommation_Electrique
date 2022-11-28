@@ -31,3 +31,10 @@ Nous avons des corrélations au décalage 1 et 24. Le décalage en 1 semble "év
 - Analyse des incréments saisonniers
 
 ![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/increments_saisonniers.PNG)
+
+- Analyse des incréments locaux et saisonniers
+
+![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/increments_locaux_saisonniers.PNG)
+
+![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/increments_locaux_saisonniers2.PNG)
+
