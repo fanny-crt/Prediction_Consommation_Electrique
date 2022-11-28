@@ -20,22 +20,22 @@ Les tests se contredisent.
 
 - Les autocorrélations empiriques
 
-![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/lagplot_multi.png)
+![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/lagplot_multi.png)
 
-![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/ACF.JPG)
+![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/ACF.JPG)
 
-![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/PACF.JPG)
+![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/PACF.JPG)
 
 Nous avons des corrélations au décalage 1 et 24. Le décalage en 1 semble "évident", la tension mesurée au temps t est naturellement proche de la tension mesurée 1 heure plus tôt. De plus, la série temporelle est périodique et non stationnaire, car nous observons un motif de période 24 (périodicité journalière). 
 
 - Analyse des incréments saisonniers
 
-![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/increments_saisonniers.PNG)
+![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/increments_saisonniers.PNG)
 
 - Analyse des incréments locaux et saisonniers
 
-![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/increments_locaux_saisonniers.PNG)
-![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/increments_locaux_saisonniers2.PNG)
+![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/increments_locaux_saisonniers.PNG)
+![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/increments_locaux_saisonniers2.PNG)
 
 # Model Building
 
@@ -44,9 +44,9 @@ Nous nous sommes principalement appuyées sur la commande auto.arima afin de dé
 
 - Modèle 1 : SARIMA(1,0,0)x(1,1,0)_{24}
 
-![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/modele_1_SARIMA.PNG)
+![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/modele_1_SARIMA.PNG)
 
-![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/coef_modele_1_SARIMA.PNG)
+![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/coef_modele_1_SARIMA.PNG)
 
 - Modèle 2 : SARIMA(0,1,1)x(0,1,1)_{24}
 
@@ -54,4 +54,4 @@ Nous nous sommes principalement appuyées sur la commande auto.arima afin de dé
 
 # Model performance
 
-![alt text](https://github.com/fanny-crt/Fanny_Portfolio/blob/main/images/model_performance.PNG)
+![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/model_performance.PNG)
