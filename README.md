@@ -8,6 +8,8 @@ Pour ce projet, nous avons analysé un jeu de données d'EDF R&D mesurant la con
 
 # Data cleaning
 
+Le jeu de données compte 9 variables dont 2 variables pour la date et le temps. Nous décidons d'analyser la tension électrique du ménage (la variable Voltage).
+
 ![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/data.PNG)
 
 On a une très grande quantité de données avec un taux d'échantillonnage par minute et beaucoup de bruit. Nous avons rééchantillonné par heure en utilisant la moyenne. Pour les valeurs manquantes, nous avons imputé les données de l'année précédente à nos mesures manquantes à l'aide de la fonction snaiv() du package forecast. 
