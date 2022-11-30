@@ -1,5 +1,5 @@
 #importer data
-data <- read.csv(file = "donnees_nettoyees.csv", header = TRUE, sep = ",")
+data <- read.csv(file = "donnees_nettoyees3.csv", header = TRUE, sep = ",")
 data$Voltage <- as.numeric(data$Voltage)
 data$date_heure <- as.POSIXct(data$date_heure, format="%Y-%m-%d %H:%M:%S")
 head(data)
