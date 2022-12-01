@@ -14,7 +14,7 @@ Le jeu de données compte 9 variables dont 2 variables pour la date et le temps.
 
 On a une très grande quantité de données avec un taux d'échantillonnage par minute et beaucoup de bruit. Nous avons rééchantillonné par heure en utilisant la moyenne. Pour les valeurs manquantes, nous avons imputé les données de l'année précédente à nos mesures manquantes à l'aide de la fonction snaiv() du package forecast. 
 
-# EDA 
+# Exploratory Data Analysis (EDA)
 
 - Stationnarité : tests ADF et KPSS 
 
