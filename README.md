@@ -2,10 +2,6 @@
 
 Pour ce projet, nous avons analysé un jeu de données d'EDF R&D mesurant la consommation d'énergie électrique d'un ménage sur une période de 4 ans. Notre objectif est de prédire la consommation d'énergie électrique du ménage.
 
-# Code 
-
-- R 
-
 # Data cleaning
 
 Le jeu de données compte 9 variables dont 2 variables pour la date et le temps. Nous décidons d'analyser la tension électrique du ménage (la variable Voltage).
@@ -63,4 +59,8 @@ Nous nous sommes principalement appuyées sur la commande auto.arima afin de dé
 # Model performance
 
 ![alt text](https://github.com/fanny-crt/Prediction_Consommation_Electrique/blob/main/images/model_performance.PNG)
+
+# Code 
+
+- R 
 
